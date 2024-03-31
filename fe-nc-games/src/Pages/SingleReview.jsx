@@ -5,7 +5,8 @@ import Loading from "../components/Loading";
 import Review from "../components/Review";
 import CommentList from "../components/CommentList";
 import { AuthContext } from "../Context/AuthContext";
-import CommentForm from "../components/CommentForm";
+import CommentModal from "../components/CommentModal";
+import LoginPrompt from "../components/LoginPrompt";
 
 function SingleReviewPage() {
 	const { review_id } = useParams();
@@ -105,36 +106,12 @@ function SingleReviewPage() {
 			<Review review={review} />
 			<div className="flex justify-center items-center">
 				{user ? (
-					<>
-						<button
-							className="btn btn-primary mt-4"
-							onClick={() => document.getElementById("my_modal_3").showModal()}
-						>
-							Leave a comment
-						</button>
-						<dialog id="my_modal_3" className="modal">
-							<div className="modal-box">
-								<form method="dialog">
-									<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-										✕
-									</button>
-								</form>
-								<h3 className="font-bold text-lg">Write a comment</h3>
-								<CommentForm
-									reviewId={review.review_id}
-									onCommentSubmitted={handleCommentSubmitted}
-								/>
-							</div>
-						</dialog>
-					</>
+					<CommentModal
+						reviewId={review_id}
+						onCommentSubmitted={handleCommentSubmitted}
+					/>
 				) : (
-					<p className="mt-4">
-						Please{" "}
-						<a href="/login" className="link link-primary">
-							log in
-						</a>{" "}
-						to leave a comment.
-					</p>
+					<LoginPrompt />
 				)}
 			</div>
 			{commentsError ? (

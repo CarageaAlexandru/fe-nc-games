@@ -1,7 +1,7 @@
 import Pagination from "./Pagination";
 
 function CommentList({ comments, currentPage, paginate, totalComments }) {
-	const commentsPerPage = 5;
+	const commentsPerPage = 5; // we default to 5 when fetching
 	return (
 		<div className="mt-8">
 			<h3 className="text-xl font-bold mb-4">Comments</h3>
