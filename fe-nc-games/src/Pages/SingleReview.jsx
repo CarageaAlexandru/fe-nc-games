@@ -1,6 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchReviewById, fetchReviewComments } from "../api/reviewsAPI";
+import {
+	deleteComment,
+	fetchReviewById,
+	fetchReviewComments,
+} from "../api/reviewsAPI";
 import Loading from "../components/Loading";
 import Review from "../components/Review";
 import CommentList from "../components/CommentList";
@@ -30,6 +34,18 @@ function SingleReviewPage() {
 			}, 2000);
 		} catch (error) {
 			console.error("Error fetching updated comments:", error);
+		}
+	};
+
+	const handleDeleteComment = async (commentId) => {
+		try {
+			await deleteComment(commentId);
+			const updatedComments = comments.filter(
+				(comment) => comment.comment_id !== commentId
+			);
+			setComments(updatedComments);
+		} catch (error) {
+			console.error("Error deleting comment:", error);
 		}
 	};
 
@@ -126,6 +142,8 @@ function SingleReviewPage() {
 					currentPage={currentPage}
 					totalComments={totalComments}
 					paginate={paginate}
+					user={user}
+					onDelete={handleDeleteComment}
 				/>
 			) : (
 				<div className="card bg-base-100 shadow-xl mt-8">
