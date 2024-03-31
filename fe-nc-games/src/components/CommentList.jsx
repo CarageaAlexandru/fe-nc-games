@@ -1,4 +1,7 @@
-function CommentList({ comments }) {
+import Pagination from "./Pagination";
+
+function CommentList({ comments, currentPage, paginate, totalComments }) {
+	const commentsPerPage = 5;
 	return (
 		<div className="mt-8">
 			<h3 className="text-xl font-bold mb-4">Comments</h3>
@@ -18,6 +21,11 @@ function CommentList({ comments }) {
 					</div>
 				</div>
 			))}
+			<Pagination
+				currentPage={currentPage}
+				totalPages={Math.ceil(totalComments / commentsPerPage)}
+				onPageChange={paginate}
+			/>
 		</div>
 	);
 }

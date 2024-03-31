@@ -23,15 +23,31 @@ export const fetchReviewById = async (reviewId) => {
 		throw error;
 	}
 };
-export const fetchReviewComments = async (reviewId) => {
+export const fetchReviewComments = async (reviewId, page = 1, limit = 5) => {
 	try {
 		const response = await axios.get(
-			`${BASE_URL}/reviews/${reviewId}/comments`
+			`${BASE_URL}/reviews/${reviewId}/comments?p=${page}&limit=${limit}`
 		);
+		// console.log("🚀 ~ fetchReviewComments ~ response:", response)
 		return response.data;
 	} catch (error) {
 		console.error(
 			`Error fetching comments for review with ID ${reviewId}:`,
+			error
+		);
+		throw error;
+	}
+};
+
+export const updateReviewVotes = async (reviewId, newVote) => {
+	try {
+		const response = await axios.patch(`${BASE_URL}/reviews/${reviewId}`, {
+			inc_votes: newVote,
+		});
+		console.log(response.data);
+	} catch (error) {
+		console.error(
+			`Error updating votes for review with ID ${reviewId}:`,
 			error
 		);
 		throw error;
