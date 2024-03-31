@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
+import { useContext } from "react";
 
 function Navigation() {
+	const { user, logout } = useContext(AuthContext);
+	console.log("🚀 ~ Navigation ~ user:", user);
 	return (
 		<div className="navbar bg-base-100">
 			<div className="navbar-start">
@@ -41,6 +45,7 @@ function Navigation() {
 				</div>
 				<a className="btn btn-ghost text-xl">NC GAMES</a>
 			</div>
+
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal px-1">
 					<li>
@@ -57,9 +62,32 @@ function Navigation() {
 					</li>
 				</ul>
 			</div>
-			<div className="navbar-end">
-				<a className="btn btn-accent">Login</a>
-			</div>
+			{user ? (
+				<div className="dropdown dropdown-end">
+					<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+						<div className="w-10 rounded-full">
+							<img src={`${user.avatar_url}`} />
+						</div>
+					</label>
+					<ul
+						tabIndex={0}
+						className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+					>
+						<li>
+							<span>Logged in as: {user.username}</span>
+						</li>
+						<li>
+							<button onClick={logout}>Logout</button>
+						</li>
+					</ul>
+				</div>
+			) : (
+				<div className="navbar-end">
+					<Link className="btn btn-accent" to="/login">
+						Login
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 }

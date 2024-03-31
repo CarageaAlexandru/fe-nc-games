@@ -6,6 +6,7 @@ import Home from "./Pages/Home";
 import Reviews from "./Pages/Reviews";
 import Categories from "./Pages/Categories";
 import SingleReviewPage from "./Pages/SingleReview";
+import LoginPage from "./Pages/Login";
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/" element={<Home />} />
 				<Route path="/about" element={<About />} />
 				<Route path="/reviews" element={<Reviews />} />
+				<Route path="/login" element={<LoginPage />} />
 				<Route path="/reviews/:review_id" element={<SingleReviewPage />} />
 				<Route path="/categories" element={<Categories />} />
 			</Routes>
