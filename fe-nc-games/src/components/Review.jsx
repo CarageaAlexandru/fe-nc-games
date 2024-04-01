@@ -12,7 +12,7 @@ function Review({ review }) {
 	return (
 		<div className="card bg-base-200 shadow-xl ">
 			<figure>
-				<img src={review.review_img_url} alt={title} />
+				<img className="rounded-xl" src={review.review_img_url} alt={title} />
 			</figure>
 			<div className="card-body">
 				<h2 className="card-title text-primary">{title}</h2>

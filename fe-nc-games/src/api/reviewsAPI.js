@@ -2,14 +2,16 @@ import axios from "axios";
 
 const BASE_URL = "https://drab-red-sheep-wear.cyclic.app/api/";
 
-export const fetchReviews = async (page = 1, limit = 9) => {
+export const fetchReviews = async (page = 1, limit = 9, category = null) => {
 	try {
-		const response = await axios.get(
-			`${BASE_URL}/reviews?p=${page}&limit=${limit}`
-		);
+		const params = { p: page, limit: limit };
+		if (category) {
+			params.category = category;
+		}
+		const response = await axios.get(`${BASE_URL}/reviews`, { params });
 		return response.data;
 	} catch (error) {
-		console.log("Error fetching reviews", error);
+		console.error("Error fetching reviews:", error);
 		throw error;
 	}
 };

@@ -13,10 +13,10 @@ function ReviewCard({ review }) {
 	} = review;
 
 	return (
-		<div className="card bg-base-100 shadow-xl">
+		<div className="card bg-base-200 shadow-xl hover:bg-primary-content hover:shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 hover:text-sky-400">
 			<Link to={`/reviews/${review_id}`}>
 				<figure>
-					<img src={review_img_url} alt={title} />
+					<img className="rounded-xl" src={review_img_url} alt={title} />
 				</figure>
 				<div className="card-body">
 					<h2 className="card-title text-primary">{title}</h2>

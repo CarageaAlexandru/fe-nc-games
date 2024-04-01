@@ -3,6 +3,7 @@ import ReviewCard from "../components/ReviewCard";
 import { fetchReviews } from "../api/reviewsAPI";
 import Pagination from "../components/Pagination";
 import Loading from "../components/Loading";
+import { useLocation } from "react-router-dom";
 
 function Reviews() {
 	const [reviews, setReviews] = useState([]);
@@ -10,6 +11,9 @@ function Reviews() {
 	const [totalPages, setTotalPages] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const location = useLocation();
+	const searchParams = new URLSearchParams(location.search);
+	const category = searchParams.get("category");
 
 	useEffect(() => {
 		const getReviews = async () => {
@@ -17,7 +21,7 @@ function Reviews() {
 			setError(null);
 
 			try {
-				const data = await fetchReviews(currentPage);
+				const data = await fetchReviews(currentPage, 9, category);
 				setReviews(data.reviews);
 				setTotalPages(Math.ceil(data.total_count / 10));
 			} catch (error) {
@@ -29,7 +33,7 @@ function Reviews() {
 		};
 
 		getReviews();
-	}, [currentPage]);
+	}, [currentPage, category]);
 
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
