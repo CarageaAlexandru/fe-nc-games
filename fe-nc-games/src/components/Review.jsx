@@ -1,5 +1,8 @@
+import Votes from "./Votes";
+
 function Review({ review }) {
 	const {
+		review_id,
 		review_body,
 		category,
 		title,
@@ -30,11 +33,11 @@ function Review({ review }) {
 				</p>
 				<p className="mt-4">{review_body}</p>
 				<div className="card-actions justify-end mt-4">
-					<div className="badge badge-outline bg-accent text-accent-content">
-						{comment_count} comments
-					</div>
-					<div className="badge badge-outline bg-accent text-accent-content">
-						{votes} votes
+					<div className="flex items-center space-x-2">
+						<div className="badge badge-lg badge-outline bg-accent text-accent-content">
+							{comment_count} comments
+						</div>
+						<Votes initialVotes={votes} reviewId={review_id}></Votes>
 					</div>
 				</div>
 			</div>

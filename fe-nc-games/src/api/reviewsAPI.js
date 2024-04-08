@@ -46,7 +46,7 @@ export const updateReviewVotes = async (reviewId, newVote) => {
 		const response = await axios.patch(`${BASE_URL}/reviews/${reviewId}`, {
 			inc_votes: newVote,
 		});
-		console.log(response.data);
+		return response.data;
 	} catch (error) {
 		console.error(
 			`Error updating votes for review with ID ${reviewId}:`,
