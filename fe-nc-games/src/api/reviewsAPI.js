@@ -72,6 +72,19 @@ export const postComment = async (reviewId, comment) => {
 	}
 };
 
+export const postReview = async (review) => {
+	try {
+		const response = await axios.post(`${BASE_URL}/reviews`, review);
+		console.log(response);
+	} catch (error) {
+		console.error(
+			`Error posting review for review.`,
+			error
+		);
+		throw error;
+	}
+};
+
 export const deleteComment = async (commentId) => {
 	try {
 		await axios.delete(`${BASE_URL}/comments/${commentId}`);

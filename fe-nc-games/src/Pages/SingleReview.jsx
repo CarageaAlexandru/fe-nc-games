@@ -60,7 +60,6 @@ function SingleReviewPage() {
 				setReview(reviewData);
 			} catch (error) {
 				setReviewError("Error fetching review. Please try again.");
-				console.error("Error fetching review:", error);
 			}
 		};
 
@@ -74,7 +73,6 @@ function SingleReviewPage() {
 					setComments([]);
 				} else {
 					setCommentsError("Error fetching comments. Please try again.");
-					console.error("Error fetching comments:", error);
 				}
 			}
 		};
