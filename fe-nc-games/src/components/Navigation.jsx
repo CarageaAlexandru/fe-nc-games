@@ -4,7 +4,6 @@ import { useContext } from "react";
 
 function Navigation() {
 	const { user, logout } = useContext(AuthContext);
-	console.log("🚀 ~ Navigation ~ user:", user);
 	return (
 		<div className="navbar bg-base-100">
 			<div className="navbar-start">

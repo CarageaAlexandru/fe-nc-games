@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function About() {
@@ -58,7 +57,7 @@ function About() {
 					<h3 className="text-2xl font-bold my-6">Explore and Enjoy</h3>
 					<p className="mb-8">
 						We invite you to explore our collection of board game reviews, leave
-						comments, and even submit your own reviews if you're logged in.
+						comments, and even submit your own reviews if youre logged in.
 					</p>
 					<div className="flex justify-end">
 						<Link to="/reviews" className="btn btn-primary">
