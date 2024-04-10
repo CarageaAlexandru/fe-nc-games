@@ -1,3 +1,5 @@
+# Please find the link to the hosted version of this project here: https://games-review-nc.netlify.app/
+
 # NC Games Review App
 
 The NC Games Review App is a web application that allows users to browse, read, and interact with reviews related to board games. It provides a platform for users to explore various game reviews, leave comments, and engage with the gaming community.
@@ -27,6 +29,3 @@ The NC Games Review App is a web application that allows users to browse, read, 
 - Node.js:
 - Express.js:
 - PostgreSQL:
-
-
-
