@@ -4,6 +4,9 @@ import { useContext } from "react";
 
 function Navigation() {
 	const { user, logout } = useContext(AuthContext);
+	const imageURL = new URL(`../assets/${user?.username}.svg`, import.meta.url)
+		.href;
+
 	return (
 		<div className="navbar bg-base-100">
 			<div className="navbar-start">
@@ -102,7 +105,7 @@ function Navigation() {
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
 							<div className="w-10 rounded-full">
-								<img src={`${user.avatar_url}`} />
+								<img src={imageURL} />
 							</div>
 						</label>
 						<ul
