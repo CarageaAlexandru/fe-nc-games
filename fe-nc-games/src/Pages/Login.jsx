@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { fetchUsers } from "../api/usersAPI";
 import { AuthContext } from "../Context/AuthContext";
+import UserCard from "../components/UserCard";
+
 
 function LoginPage() {
 	const [users, setUsers] = useState([]);
@@ -24,24 +26,7 @@ function LoginPage() {
 			<h1 className="text-4xl font-bold mb-4">Login</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 				{users.map((user) => (
-					<div key={user.username} className="card bg-base-200 shadow-xl">
-						<figure className="px-10 pt-10">
-							<img
-								src={user.avatar_url}
-								alt={user.username}
-								className="rounded-xl w-24 h-24 object-cover"
-							/>
-						</figure>
-						<div className="card-body items-center text-center">
-							<h2 className="card-title">{user.name}</h2>
-							<p>@{user.username}</p>
-							<div className="card-actions">
-								<button className="btn btn-primary" onClick={() => login(user)}>
-									Log in with {user.username}
-								</button>
-							</div>
-						</div>
-					</div>
+					<UserCard key={user.username} user={user} login={login} />
 				))}
 			</div>
 		</div>
