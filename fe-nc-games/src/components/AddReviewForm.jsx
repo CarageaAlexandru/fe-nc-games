@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import { fetchCategories } from "../api/categoriesAPI";
 import { fetchRandomGamePhoto } from "../api/pexelsAPI";
 import { postReview } from "../api/reviewsAPI";
+import { z } from "zod";
+
+const reviewSchema = z.object({
+	owner: z.string(),
+	title: z.string().min(1, "Title is required").max(50),
+	review_body: z.string().min(1, "Review body is required").max(300),
+	designer: z.string().min(1, "Designer is required").max(30),
+	category: z.string().min(1, "Category is required"),
+	review_img_url: z.string().url("Invalid URL format"),
+});
 
 function AddReviewForm({ user, onReviewAdded }) {
 	const [formData, setFormData] = useState({
@@ -14,34 +24,52 @@ function AddReviewForm({ user, onReviewAdded }) {
 	});
 	const [categories, setCategories] = useState([]);
 	const [alert, setAlert] = useState(null);
+	const [errors, setErrors] = useState({});
+
+	const getRandomPhoto = async () => {
+		try {
+			const randomPhotoUrl = await fetchRandomGamePhoto();
+			setFormData((prevFormData) => ({
+				...prevFormData,
+				review_img_url: randomPhotoUrl,
+			}));
+		} catch (error) {
+			console.error("Error fetching random game photo:", error);
+		}
+	};
+	const getCategories = async () => {
+		try {
+			const categoriesData = await fetchCategories();
+			setCategories(categoriesData);
+		} catch (error) {
+			console.error("Error fetching categories:", error);
+		}
+	};
 
 	useEffect(() => {
-		const getRandomPhoto = async () => {
-			try {
-				const randomPhotoUrl = await fetchRandomGamePhoto();
-				setFormData((prevFormData) => ({
-					...prevFormData,
-					review_img_url: randomPhotoUrl,
-				}));
-			} catch (error) {
-				console.error("Error fetching random game photo:", error);
-			}
-		};
-		const getCategories = async () => {
-			try {
-				const categoriesData = await fetchCategories();
-				setCategories(categoriesData);
-			} catch (error) {
-				console.error("Error fetching categories:", error);
-			}
-		};
-
 		getRandomPhoto();
 		getCategories();
 	}, []);
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setErrors({ ...errors, [e.target.name]: null });
+	};
+
+	const validateForm = () => {
+		try {
+			reviewSchema.parse(formData);
+			return true;
+		} catch (error) {
+			if (error instanceof z.ZodError) {
+				const newErrors = {};
+				error.errors.forEach((err) => {
+					newErrors[err.path[0]] = err.message;
+				});
+				setErrors(newErrors);
+			}
+			return false;
+		}
 	};
 
 	const handleSuccess = () => {
@@ -79,6 +107,12 @@ function AddReviewForm({ user, onReviewAdded }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const isValid = validateForm();
+
+		if (!isValid) {
+			return;
+		}
+
 		try {
 			const response = await postReview(formData);
 			handleSuccess();
@@ -114,10 +148,17 @@ function AddReviewForm({ user, onReviewAdded }) {
 						value={formData.title}
 						onChange={handleChange}
 						placeholder="Enter title"
-						className="input input-bordered w-full"
+						className={`input input-bordered w-full ${
+							errors.title ? "input-error" : ""
+						}`}
 						maxLength="50"
 						required
 					/>
+					{errors.title && (
+						<label className="label">
+							<span className="label-text-alt text-error">{errors.title}</span>
+						</label>
+					)}
 				</div>
 
 				<div className="form-control">
@@ -183,7 +224,6 @@ function AddReviewForm({ user, onReviewAdded }) {
 						placeholder="Enter review image URL"
 						className="input input-bordered w-full"
 						required
-						disabled
 					/>
 				</div>
 			</div>

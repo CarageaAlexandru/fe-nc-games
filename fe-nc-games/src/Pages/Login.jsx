@@ -2,24 +2,35 @@ import { useContext, useEffect, useState } from "react";
 import { fetchUsers } from "../api/usersAPI";
 import { AuthContext } from "../Context/AuthContext";
 import UserCard from "../components/UserCard";
-
+import Loading from "../components/Loading";
 
 function LoginPage() {
 	const [users, setUsers] = useState([]);
 	const { login } = useContext(AuthContext);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getUsers = async () => {
+			setLoading(true);
 			try {
 				const usersData = await fetchUsers();
 				setUsers(usersData.users);
 			} catch (error) {
 				console.error("Error fetching users:", error);
 			}
+			setLoading(false);
 		};
 
 		getUsers();
 	}, []);
+
+	if (loading) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<Loading />
+			</div>
+		);
+	}
 
 	return (
 		<div className="container mx-auto mt-8">
