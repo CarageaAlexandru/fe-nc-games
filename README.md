@@ -1,4 +1,4 @@
-# Please find the link to the hosted version of this project here: https://games-review-nc.netlify.app/
+# Please find the link to the hosted version of this project here: https://admin-panel-nu-beige.vercel.app/login
 
 # NC Games Review App
 
