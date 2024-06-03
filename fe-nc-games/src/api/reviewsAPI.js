@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://drab-red-sheep-wear.cyclic.app/api/";
+const BASE_URL = "https://be-nc-games-ldxg.onrender.com/api/";
 
 export const fetchReviews = async (page = 1, limit = 9, category = null) => {
 	try {
