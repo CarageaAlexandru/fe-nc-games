@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://be-nc-games-ldxg.onrender.com/api/";
+const BASE_URL = "https://be-nc-games-ldxg.onrender.com/api";
 
 export const fetchUsers = async () => {
 	try {
